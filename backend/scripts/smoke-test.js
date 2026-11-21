@@ -29,12 +29,17 @@ async function login(email) {
 }
 
 async function run() {
-  const admin = await login('admin@team6.dev');
-  const manager = await login('manager@team6.dev');
+  const admin = await login('asha@team6.dev');
+  const manager = await login('manoj@team6.dev');
   const prajwal = await login('prajwal@team6.dev');
   const navya = await login('navya@team6.dev');
 
   check('Wrong password is rejected', (await call('POST', '/auth/login', { body: { email: 'prajwal@team6.dev', password: 'nope' } })).status, 401);
+  await login('prajwal@team6.dev');
+
+  const lockEmail = `locktest${Date.now()}@team6.dev`;
+  for (let i = 0; i < 5; i++) await call('POST', '/auth/login', { body: { email: lockEmail, password: 'wrong' } });
+  check('Login locked after 5 failed attempts', (await call('POST', '/auth/login', { body: { email: lockEmail, password: 'wrong' } })).status, 429);
   check('No token on protected API', (await call('GET', '/tasks')).status, 401);
   check('Garbage token on protected API', (await call('GET', '/tasks', { token: 'abc.def.ghi' })).status, 401);
 

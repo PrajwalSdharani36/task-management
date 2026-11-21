@@ -15,9 +15,11 @@ const form = reactive({ email: '', password: '' });
 const loading = ref(false);
 const error = ref('');
 
+const showDemo = import.meta.env.VITE_DEMO_LOGINS === 'true';
+
 const demoAccounts = [
-  { role: 'Admin', email: 'admin@team6.dev' },
-  { role: 'Manager', email: 'manager@team6.dev' },
+  { role: 'Admin', email: 'asha@team6.dev' },
+  { role: 'Manager', email: 'manoj@team6.dev' },
   { role: 'Employee', email: 'prajwal@team6.dev' },
 ];
 
@@ -80,8 +82,8 @@ async function submit() {
 
         <p class="muted center">New here? <RouterLink to="/register">Create an account</RouterLink></p>
 
-        <div class="demo-box">
-          <span class="label">Demo accounts (after running the seed script)</span>
+        <div v-if="showDemo" class="demo-box">
+          <span class="label">Quick login (development only)</span>
           <div class="demo-buttons">
             <button v-for="d in demoAccounts" :key="d.email" type="button" class="btn btn-ghost btn-sm" @click="useDemo(d.email)">
               {{ d.role }}

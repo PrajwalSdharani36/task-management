@@ -50,9 +50,9 @@ Vite proxies every `/api` request to `http://localhost:5000`, so no CORS setup i
 
 | Role     | Name                | Email               |
 | -------- | ------------------- | ------------------- |
-| Admin    | Asha Admin          | admin@team6.dev     |
-| Manager  | Manoj Manager       | manager@team6.dev   |
-| Manager  | Meera Manager       | manager2@team6.dev  |
+| Admin    | Asha Verma          | asha@team6.dev      |
+| Manager  | Manoj Kumar         | manoj@team6.dev     |
+| Manager  | Meera Reddy         | meera@team6.dev     |
 | Employee | Prajwal S Dharani   | prajwal@team6.dev   |
 | Employee | Chaganti Navya Sri  | navya@team6.dev     |
 | Employee | Puvvada Sasidhar    | sasidhar@team6.dev  |
@@ -62,6 +62,8 @@ Vite proxies every `/api` request to `http://localhost:5000`, so no CORS setup i
 
 - **Email domain:** only `@team6.dev` addresses can register or be created by an admin. Change it with `ALLOWED_EMAIL_DOMAIN` in `backend/.env` (leave it empty to allow any domain).
 - **New sign-ups** always start as employees.
+- **Login protection:** after 5 wrong passwords for the same email, that login is locked for 15 minutes (`LOGIN_MAX_ATTEMPTS`, `LOGIN_LOCK_MINUTES` in `backend/.env`). Restarting the backend clears all locks.
+- **Quick-login buttons** on the login page are hidden by default. To show them while developing, create `frontend/.env` with `VITE_DEMO_LOGINS=true` and restart `npm run dev`.
 - **Adding or removing admins and managers** is done by an admin on the **Users** page:
   - *Add user* with any role, or change the role dropdown on an existing user to promote or demote them.
   - An admin can't change their own role or delete themselves, so there is always at least one admin.
@@ -78,7 +80,7 @@ cd backend
 npm run test:api
 ```
 
-It runs 26 checks against the API directly (no browser), logging in as each role and checking 401/403/404 responses, task-level access and role escalation attempts.
+It runs 27 checks against the API directly (no browser), logging in as each role and checking 401/403/404 responses, task-level access and role escalation attempts.
 
 ## Project structure
 

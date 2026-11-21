@@ -21,6 +21,7 @@ Validation errors also include `"errors": { "field": "message" }`.
 | 403 | Logged in but role/ownership does not allow the action |
 | 404 | Not found **or not accessible to you** (we don't reveal other users' tasks) |
 | 409 | Email already registered |
+| 429 | Too many failed login attempts (locked for 15 minutes) |
 | 503 | Database unavailable |
 
 ## Auth
@@ -29,7 +30,7 @@ Validation errors also include `"errors": { "field": "message" }`.
 | ------ | ---- | ---- | ---- | ----- |
 | GET | `/auth/config` | — | — | `{ allowRegistration, emailDomain }` — used by the register page |
 | POST | `/auth/register` | — | `name, email, password` | Email must end in `@team6.dev` (`ALLOWED_EMAIL_DOMAIN`), else 400. Always creates an **employee**. Disabled when `ALLOW_REGISTRATION=false`. Returns `{ token, user }` |
-| POST | `/auth/login` | — | `email, password` | Returns `{ token, user }`. Same 401 message for unknown email and wrong password |
+| POST | `/auth/login` | — | `email, password` | Returns `{ token, user }`. Same 401 message for unknown email and wrong password. After 5 failed attempts for the same email the login is locked for 15 minutes (429) |
 | GET | `/auth/me` | any | — | Returns `{ user }`. Used to restore the session after a refresh |
 | PATCH | `/auth/me` | any | `name?`, `currentPassword?`, `newPassword?` | Changing the password requires the current one |
 

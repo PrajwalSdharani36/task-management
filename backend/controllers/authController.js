@@ -3,6 +3,7 @@ import ApiError from '../utils/ApiError.js';
 import { sendSuccess } from '../utils/response.js';
 import { signToken } from '../utils/token.js';
 import { assertAllowedEmail } from '../utils/email.js';
+import { recordFailedLogin, clearFailedLogins } from '../middleware/loginLimiter.js';
 import { env } from '../config/env.js';
 import { ROLES } from '../config/roles.js';
 
@@ -34,8 +35,14 @@ export async function login(req, res) {
 
   const user = await User.findOne({ email: String(email).toLowerCase().trim() }).select('+password');
   if (!user || !(await user.comparePassword(password))) {
-    throw ApiError.unauthorized('Invalid email or password');
+    const left = recordFailedLogin(req);
+    let hint = '';
+    if (left <= 0) hint = `. Login is locked for ${env.loginLockMinutes} minutes`;
+    else if (left <= 2) hint = ` (${left} attempt${left === 1 ? '' : 's'} left)`;
+    throw ApiError.unauthorized(`Invalid email or password${hint}`);
   }
+
+  clearFailedLogins(req);
 
   sendSuccess(res, {
     message: 'Logged in successfully',

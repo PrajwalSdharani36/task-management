@@ -7,9 +7,9 @@ import Activity from '../models/Activity.js';
 const DEFAULT_PASSWORD = 'Password@123';
 
 const users = [
-  { key: 'admin', name: 'Asha Admin', email: 'admin@team6.dev', role: 'admin' },
-  { key: 'manager', name: 'Manoj Manager', email: 'manager@team6.dev', role: 'manager' },
-  { key: 'manager2', name: 'Meera Manager', email: 'manager2@team6.dev', role: 'manager' },
+  { key: 'admin', name: 'Asha Verma', email: 'asha@team6.dev', role: 'admin' },
+  { key: 'manager', name: 'Manoj Kumar', email: 'manoj@team6.dev', role: 'manager' },
+  { key: 'manager2', name: 'Meera Reddy', email: 'meera@team6.dev', role: 'manager' },
   { key: 'prajwal', name: 'Prajwal S Dharani', email: 'prajwal@team6.dev', role: 'employee' },
   { key: 'navya', name: 'Chaganti Navya Sri', email: 'navya@team6.dev', role: 'employee' },
   { key: 'sasidhar', name: 'Puvvada Sasidhar', email: 'sasidhar@team6.dev', role: 'employee' },

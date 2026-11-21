@@ -14,6 +14,8 @@ export const env = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
   clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
   allowRegistration: process.env.ALLOW_REGISTRATION !== 'false',
+  loginMaxAttempts: Number(process.env.LOGIN_MAX_ATTEMPTS) || 5,
+  loginLockMinutes: Number(process.env.LOGIN_LOCK_MINUTES) || 15,
   emailDomain: (process.env.ALLOWED_EMAIL_DOMAIN ?? 'team6.dev').trim().toLowerCase().replace(/^@/, ''),
   isProduction: process.env.NODE_ENV === 'production',
 };

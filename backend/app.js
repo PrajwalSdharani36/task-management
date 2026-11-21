@@ -7,8 +7,12 @@ import authRoutes from './routes/authRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import { notFound, errorHandler } from './middleware/errorHandler.js';
+import { securityHeaders } from './middleware/securityHeaders.js';
 
 const app = express();
+
+app.disable('x-powered-by');
+app.use(securityHeaders);
 
 app.use(cors({ origin: env.clientUrl }));
 app.use(express.json({ limit: '100kb' }));
